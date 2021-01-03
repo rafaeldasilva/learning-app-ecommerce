@@ -42,7 +42,10 @@ MariaDB > GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
 MariaDB > FLUSH PRIVILEGES;
 ```
 
-> ON a multi-node setup remember to provide the IP address of the web server here: `'ecomuser'@'web-server-ip'`
+> ON a multi-node setup remember to create with the wildcard % and grant its privileges:
+```
+MariaDB > CREATE USER 'ecomuser'@'%' IDENTIFIED BY 'ecompassword';
+```
 
 4. Load Product Inventory Information to database
 
@@ -68,13 +71,14 @@ mysql < db-load-script.sql
 
 ## Deploy and Configure Web
 
-1. Install required packages - (php-mysqlnd for Centos8 and above)
+1. Install required packages
 
 ```
 sudo yum install -y httpd php php-mysql php-mysqlnd
 sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
 sudo firewall-cmd --reload
 ```
+> Instead of php-mysql use php-mysqlnd for Centos8 and above
 
 2. Configure httpd
 
@@ -115,6 +119,10 @@ sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
 > ON a multi-node setup remember to provide the IP address of the database server here.
 ```
 sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
+```
+> It might b necessary to enable PHP connectio to DB trough SElinux
+```
+sudo setsebool -P httpd_can_network_connect=1
 ```
 
 6. Test
