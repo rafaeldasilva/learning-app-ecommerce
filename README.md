@@ -68,10 +68,10 @@ mysql < db-load-script.sql
 
 ## Deploy and Configure Web
 
-1. Install required packages
+1. Install required packages - (php-mysqlnd for Centos8 and above)
 
 ```
-sudo yum install -y httpd php php-mysql
+sudo yum install -y httpd php php-mysql php-mysqlnd
 sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
 sudo firewall-cmd --reload
 ```
