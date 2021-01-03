@@ -120,7 +120,7 @@ sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
 ```
 sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
 ```
-> It might b necessary to enable PHP connectio to DB trough SElinux
+> It might b necessary to enable PHP connection to DB trough SElinux
 ```
 sudo setsebool -P httpd_can_network_connect=1
 ```
